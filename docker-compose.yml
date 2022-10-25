@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  web:
+    build: 
+      dockerfile: web.Dockerfile
+      context: .
+    container_name: rdf-to-html2
+    working_dir: /code/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    links: 
+      - virtuoso 
+
+  virtuoso:
+    build:
+      dockerfile: virtuoso.Dockerfile
+      context: .
+    container_name: virtuoso2
+    ports:
+      - "8890:8890"
